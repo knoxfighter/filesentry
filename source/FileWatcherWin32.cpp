@@ -68,7 +68,6 @@ namespace fs
     {
         // TCHAR is wide char if UNICODE has been defined
         // otherwise it's just regular char
-        TCHAR szFile[MAX_PATH];
         PFILE_NOTIFY_INFORMATION pNotify;
         WatchStruct* pWatch = (WatchStruct*) lpOverlapped;
         size_t offset = 0;
