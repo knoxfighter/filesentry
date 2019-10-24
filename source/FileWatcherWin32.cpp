@@ -51,7 +51,7 @@ namespace fs
         std::function<void(
             WatchID watchid, 
             const String& dir, 
-            const String& filename, 
+            const std::wstring& filename,
             Action action)> mFileWatchListener;
         char* mDirName;
         WatchID mWatchid;
@@ -83,21 +83,9 @@ namespace fs
                 pNotify = (PFILE_NOTIFY_INFORMATION) &pWatch->mBuffer[offset];
                 offset += pNotify->NextEntryOffset;
 
-#			if defined(UNICODE)
-                {
-                    lstrcpynW(szFile, pNotify->FileName,
-                        min(MAX_PATH, pNotify->FileNameLength / sizeof(WCHAR) + 1));
-                }
-#			else
-                {
-                    int count = WideCharToMultiByte(CP_ACP, 0, pNotify->FileName,
-                        pNotify->FileNameLength / sizeof(WCHAR),
-                        szFile, MAX_PATH - 1, NULL, NULL);
-                    szFile[count] = TEXT('\0');
-                }
-#			endif
+                std::wstring fileName(pNotify->FileName, pNotify->FileNameLength);
 
-                pWatch->mFileWatcher->handleAction(pWatch, (const char*)szFile, pNotify->Action);
+                pWatch->mFileWatcher->handleAction(pWatch, fileName, pNotify->Action);
 
             } while (pNotify->NextEntryOffset != 0);
         }
@@ -192,7 +180,7 @@ namespace fs
     }
 
     //--------
-    WatchID FileWatcherWin32::addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const String& filename, Action action)> watcher, bool recursive)
+    WatchID FileWatcherWin32::addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const std::wstring& filename, Action action)> watcher, bool recursive)
     {
         WatchID watchid = ++mLastWatchID;
 
@@ -251,7 +239,7 @@ namespace fs
     }
 
     //--------
-    void FileWatcherWin32::handleAction(WatchStruct* watch, const String& filename, unsigned long action)
+    void FileWatcherWin32::handleAction(WatchStruct* watch, const std::wstring& filename, unsigned long action)
     {
         Action fwAction;
 

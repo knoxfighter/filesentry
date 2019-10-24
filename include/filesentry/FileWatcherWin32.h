@@ -58,7 +58,7 @@ namespace fs
         /// @exception FileNotFoundException Thrown when the requested directory does not exist
         WatchID addWatch(
             const String& directory, 
-            std::function<void(WatchID watchid, const String& dir, const String& filename, Action action)> watcher, 
+            std::function<void(WatchID watchid, const String& dir, const std::wstring& filename, Action action)> watcher,
             bool recursive);
 
         /// Remove a directory watch. This is a brute force lazy search O(nlogn).
@@ -71,7 +71,7 @@ namespace fs
         void update();
 
         /// Handles the action
-        void handleAction(WatchStruct* watch, const String& filename, unsigned long action);
+        void handleAction(WatchStruct* watch, const std::wstring& filename, unsigned long action);
 
     private:
         /// Map of WatchID to WatchStruct pointers

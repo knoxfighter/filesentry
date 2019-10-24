@@ -51,13 +51,13 @@ namespace fs
     }
 
     //--------
-    WatchID FileWatcher::addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const String& filename, Action action)> watcher)
+    WatchID FileWatcher::addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const std::wstring& filename, Action action)> watcher)
     {
         return mImpl->addWatch(directory, watcher, false);
     }
 
     //--------
-    WatchID FileWatcher::addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const String& filename, Action action)> watcher, bool recursive)
+    WatchID FileWatcher::addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const std::wstring& filename, Action action)> watcher, bool recursive)
     {
         return mImpl->addWatch(directory, watcher, recursive);
     }

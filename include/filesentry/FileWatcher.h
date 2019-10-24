@@ -102,11 +102,11 @@ namespace fs
         /// Add a directory watch. Same as the other addWatch, but doesn't have recursive option.
         /// For backwards compatibility.
         /// @exception FileNotFoundException Thrown when the requested directory does not exist
-        WatchID addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const String& filename, Action action)> handler);
+        WatchID addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const std::wstring& filename, Action action)> handler);
 
         /// Add a directory watch
         /// @exception FileNotFoundException Thrown when the requested directory does not exist
-        WatchID addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const String& filename, Action action)> handler, bool recursive);
+        WatchID addWatch(const String& directory, std::function<void(WatchID watchid, const String& dir, const std::wstring& filename, Action action)> handler, bool recursive);
 
         /// Remove a directory watch. This is a brute force search O(nlogn).
         void removeWatch(const String& directory);
