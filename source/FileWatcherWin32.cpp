@@ -83,7 +83,7 @@ namespace fs
                 pNotify = (PFILE_NOTIFY_INFORMATION) &pWatch->mBuffer[offset];
                 offset += pNotify->NextEntryOffset;
 
-                std::wstring fileName(pNotify->FileName, pNotify->FileNameLength);
+                std::wstring fileName(pNotify->FileName, pNotify->FileNameLength / sizeof(WCHAR));
 
                 pWatch->mFileWatcher->handleAction(pWatch, fileName, pNotify->Action);
 
